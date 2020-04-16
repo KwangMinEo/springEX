@@ -1,39 +1,40 @@
 package net.hb.crud.aop;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.util.Arrays;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.springframework.stereotype.Component;
 
-/**
- * Handles requests for the application home page.
- */
-@Controller
+//@Component 객체작업 한번더 진행 비권장  	
+@Aspect
 public class Banking {
 	
-	private static final Logger logger = LoggerFactory.getLogger(Banking.class);
-	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
-		return "home";
-	}
-	
-}
+	 //@Around("execution(public * net.hb.crud..*(..))")
+	 @Around("execution(public * net.hb.crud.BoardDAO.dbDetail(..))")
+	  public Object  timeLog(ProceedingJoinPoint pjp) throws Throwable{
+	    long startTime = System.currentTimeMillis();   
+	    long endTime=System.currentTimeMillis();
+	    System.out.println(pjp.getSignature().getName()+"메소드 접속시간 : "+(endTime-startTime)+"초");
+	    Object result=pjp.proceed();
+	    return result;
+	 }//end	
+
+	 //@Before("execution(public * net.hb.crud..*(..))")
+	 @Before("execution(public * net.hb.crud.BoardDAO.dbDetail(..))")
+	 public void open( ){
+	   System.out.println("open메소드 자동호출");
+	   System.out.println("로그파일,보안인증,트랜잭션");
+	 }//end
+	  
+	 //@After("execution(public * net.hb.crud..*(..))")
+	 @After("execution(public * net.hb.crud.BoardDAO.dbDetail(..))")
+	  public void close( ){
+		System.out.println("close메소드 자동호출");
+		System.out.println("메일보내기,폰메세지");
+		System.out.println("==========================");
+	  }//end
+}//class END

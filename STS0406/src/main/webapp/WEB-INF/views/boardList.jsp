@@ -91,7 +91,7 @@
  <p>
   	<a href="index.jsp">[index.jsp]</a>
   	<a href="board.do">[board등록]</a>
-  	<a href="boardList">[board전체출력]</a>
+  	<a href="boardList.do">[board전체출력]</a>
   	<a href="login.do">[로그인]</a>
   	
   	  	
