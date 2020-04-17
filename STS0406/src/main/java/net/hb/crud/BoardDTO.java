@@ -18,6 +18,7 @@ public class BoardDTO {
 	
 	private int start, end;  
 	private String skey, sval;
+}//class END
 	
 //	public MultipartFile getUpload_f() {return upload_f;}
 //	public void setUpload_f(MultipartFile upload_f) {	this.upload_f = upload_f;}
@@ -50,4 +51,3 @@ public class BoardDTO {
 //	public void setSkey(String skey) {this.skey = skey;}
 //	public String getSval() {return sval;}
 //	public void setSval(String sval) {this.sval = sval;}
-}//class END
