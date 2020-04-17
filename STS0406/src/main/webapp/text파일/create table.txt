@@ -1,5 +1,6 @@
 drop table  hobby_reply ;
  drop table  hobby ;
+ drop table  login ;
  drop sequence  hobby_seq;
  drop sequence  hobby_reply_seq;   --나중에 댓글에사용
  
@@ -27,6 +28,11 @@ drop table  hobby_reply ;
    rmemo       VARCHAR2(30) ,
    hobby_idx   NUMBER(4),
    constraint  hobby_reply_fk foreign key(hobby_idx) references hobby(hobby_idx) on delete cascade
+ ) ;
+ 
+ create  table login (
+   userid   	VARCHAR2(10) primary key ,
+   pwd       	VARCHAR2(20)
  ) ;
  
  commit  ;
